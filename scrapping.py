@@ -1,3 +1,4 @@
+import json
 import requests
 from parsel import Selector
 from utils import get_b_content, remove_b_tags, remove_tabs_and_new_lines_from_text
@@ -66,3 +67,12 @@ class WebCrawler():
         Print on screen the data value from WebCrawler object
         """
         print(self.data)
+
+    def save_as_json(self) -> None:
+        """
+        Save the data value from WebCrawler object into json file
+        """
+        with open('machine-webcrawler.json', 'w') as json_file:
+            json.dump(self.data, json_file)
+    
+        print("Data saved in 'machine-webcrawler.json' file")

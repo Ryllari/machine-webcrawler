@@ -13,14 +13,26 @@ It is recommended to use a virtual environment to run the project (optional).
 ### Running the project
 To execute this project, you need run the ***run.py*** file with at least one of the following arguments:
  
- `-h` or `--help`: show the help message and exit
+`-h` or `--help`: show the help message and exit
  
-   `--print`: crawler the data and print to screen
+`--print`: crawler the data and print to screen
 
+`--save_json`: crawler the data and save the results into json file
 
- 1. If you want crawler the data and print, run:
+1. If you want crawler the data and print, run:
 	```
 	$ python run.py --print
+	```
+
+2. If you want crawler the data and save into json file, run:
+	```
+	$ python run.py --save_json
+	```
+
+**Note: You can use two or more arguments together**
+1. If you want crawler the data print and save into json file, run:
+	```
+	$ python run.py --print --save_json
 	```
 
 ### Running tests

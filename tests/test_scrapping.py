@@ -94,3 +94,12 @@ class TestWebCrawler(TestCase):
         crawler.print_data_on_screen()
 
         mock_print.assert_called_once_with(crawler.data)
+
+    @mock.patch('builtins.open')
+    @mock.patch('scrapping.print', return_value=None)
+    def test_save_as_json(self, mock_print, mock_open):
+        crawler = WebCrawler.get_object()
+        crawler.save_as_json()
+
+        mock_open.assert_called_once_with('machine-webcrawler.json', 'w')
+        mock_print.assert_called_once_with("Data saved in 'machine-webcrawler.json' file")
