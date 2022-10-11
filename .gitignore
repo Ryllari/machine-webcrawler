@@ -1,7 +1,9 @@
 # Folders
 __pycache__
+htmlcov
 
 # Files
 *.pyc
 machine-webcrawler.json
 machine-webcrawler.csv
+.coverage

@@ -3,7 +3,12 @@ import json
 import requests
 
 from parsel import Selector
-from utils import get_b_content, remove_b_tags, remove_tabs_and_new_lines_from_text
+from utils import (
+    get_b_content, 
+    remove_b_tags, 
+    remove_tabs_and_new_lines_from_text,
+    remove_text
+)
 
 
 class WebCrawler():
@@ -16,6 +21,7 @@ class WebCrawler():
     def __init__(self):
         self.data = []
         self.vultr_url = "https://www.vultr.com/products/bare-metal/#pricing"
+        self.hostgator_url = "https://www.hostgator.com/vps-hosting"
         self.csv_headers = ["cpu", "memory", "bandwidth", "storage", "price_per_month"]
 
     @classmethod
@@ -24,7 +30,7 @@ class WebCrawler():
         Generate and return a WebCrawler object with all data processed
         """
         webcrawler = cls()
-        webcrawler.process_vultr_data()
+        webcrawler.process_data()
         
         return webcrawler
 
@@ -65,6 +71,47 @@ class WebCrawler():
         self.data += vultr_data
         return self.data
 
+    def process_hostgator_data(self) -> list:
+        """
+        Given HostGator VPS Hosting website, 
+        Search for 'we recommend' tables,
+        Get needed informations 
+        and add at class data
+        """
+        hostgator_data = []
+        response = requests.get(self.hostgator_url)
+
+        if response.ok:
+            text = remove_tabs_and_new_lines_from_text(response.text)
+            selector = Selector(text=text)
+            
+            divs = selector.css('.recommended')
+            for div in divs:
+                price_month = div.css(".pricing-card-price ::text").getall()[:2]
+                price_month = "".join(price_month)
+                items_list = div.css(".pricing-card-list-items ::text").getall()
+                
+                machine_data = {
+                    "cpu": remove_text(items_list[2], " CPU"),
+                    "memory": remove_text(items_list[0], " RAM"),
+                    "bandwidth": remove_text(items_list[6], " bandwidth"),
+                    "storage": items_list[4],
+                    "price_per_month": price_month,
+                }
+                hostgator_data.append(machine_data)
+
+        self.data += hostgator_data
+        return self.data
+
+    def process_data(self) -> None:
+        """
+        Call process websites methods 
+        To get needed informations 
+        and add at class data
+        """
+        self.process_vultr_data()
+        self.process_hostgator_data()
+    
     def print_data_on_screen(self) -> None:
         """
         Print on screen the data value from WebCrawler object

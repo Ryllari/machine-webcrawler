@@ -1,5 +1,5 @@
 # machine-webcrawler
-*A web crawler to scrapping machine information data from [Vultr Bare Metal](https://www.vultr.com/products/bare-metal/#pricing) site*
+*A web crawler to scrapping machine information data from [Vultr Bare Metal](https://www.vultr.com/products/bare-metal/#pricing) and [HostGator VPS Hosting](https://www.hostgator.com/vps-hosting) sites*
 
 
 ### Setting up
@@ -17,9 +17,9 @@ To execute this project, you need run the ***run.py*** file with at least one of
  
 `--print`: crawler the data and print to screen
 
-`--save_json`: crawler the data and save the results into json file
+`--save_json`: crawler the data and save the results into json file (*machine-webcrawler.json*)
 
-`--save_csv`: crawler the data and save the results into csv file
+`--save_csv`: crawler the data and save the results into csv file (*machine-webcrawler.csv*)
 
 1. If you want crawler the data and print, run:
 	```
@@ -60,8 +60,16 @@ To execute this project, you need run the ***run.py*** file with at least one of
 ### Running tests
 To execute the tests, run:
 ```commandline
-python -m unittest -v
+$ python -m unittest -v
 ```
+
+If you want to see the test coverage level, run:
+```commandline
+$ coverage run -m unittest discover -s tests/ -v
+$ coverage report
+```
+
+*Note: Currently, this project has 99% code coverage*
 
 ---
 ***This project was developed in an environment with Ubuntu 20.04 and Python 3.8.10. But, you can run in any system with Python 3.8.10+***

@@ -9,7 +9,10 @@ def mock_requests_get(*args, **kwargs):
             self.text = file_text
             self.ok = reponse_ok
 
-    filename = 'vultr.html'
+    if "vultr" in args[0]:
+        filename = 'vultr.html'
+    elif "hostgator" in args[0]:
+        filename = 'hostgator.html'
 
     with open(f'tests/files/{filename}', 'r') as f:
         content_file = f.read()
