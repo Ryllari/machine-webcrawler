@@ -80,3 +80,17 @@ class TestWebCrawler(TestCase):
                 'price_per_month': '$1,575'
             }
         )
+
+    @mock.patch('scrapping.requests.get', side_effect=mock_requests_get)
+    def test_get_object(self, mock):
+        crawler = WebCrawler.get_object()
+        
+        self.assertTrue(isinstance(crawler, WebCrawler))
+        self.assertEqual(len(crawler.data), 6)
+
+    @mock.patch('scrapping.print', return_value=None)
+    def test_print_data_on_screen(self, mock_print):
+        crawler = WebCrawler.get_object()
+        crawler.print_data_on_screen()
+
+        mock_print.assert_called_once_with(crawler.data)

@@ -14,6 +14,16 @@ class WebCrawler():
         self.data = []
         self.vultr_url = "https://www.vultr.com/products/bare-metal/#pricing"
 
+    @classmethod
+    def get_object(cls) -> object:
+        """
+        Generate and return a WebCrawler object with all data processed
+        """
+        webcrawler = cls()
+        webcrawler.process_vultr_data()
+        
+        return webcrawler
+
     def process_vultr_data(self) -> list:
         """
         Given Vultr Bare Metal website, 
@@ -50,3 +60,9 @@ class WebCrawler():
 
         self.data += vultr_data
         return self.data
+
+    def print_data_on_screen(self) -> None:
+        """
+        Print on screen the data value from WebCrawler object
+        """
+        print(self.data)
