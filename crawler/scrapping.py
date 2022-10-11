@@ -3,7 +3,7 @@ import json
 import requests
 
 from parsel import Selector
-from utils import (
+from crawler.utils import (
     get_b_content, 
     remove_b_tags, 
     remove_tabs_and_new_lines_from_text,

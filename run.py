@@ -1,6 +1,6 @@
 import argparse
 
-from scrapping import WebCrawler
+from crawler.scrapping import WebCrawler
 
 
 def execute(args):

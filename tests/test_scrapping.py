@@ -1,16 +1,16 @@
 from unittest import mock
 from unittest import TestCase
 
-from scrapping import WebCrawler
+from crawler.scrapping import WebCrawler
 from tests.requests_mock import mock_requests_get
 
 
 class TestWebCrawler(TestCase):
     """
-    Tests scrapping.WebCrawler class
+    Tests crawler.scrapping.WebCrawler class
     """
 
-    @mock.patch('scrapping.requests.get', side_effect=mock_requests_get)
+    @mock.patch('crawler.scrapping.requests.get', side_effect=mock_requests_get)
     def test_process_vultr_data(self, mock):
         crawler = WebCrawler()
         crawler.process_vultr_data()
@@ -82,7 +82,7 @@ class TestWebCrawler(TestCase):
             }
         )
 
-    @mock.patch('scrapping.requests.get', side_effect=mock_requests_get)
+    @mock.patch('crawler.scrapping.requests.get', side_effect=mock_requests_get)
     def test_process_hostgator_data(self, mock):
         crawler = WebCrawler()
         crawler.process_hostgator_data()
@@ -100,7 +100,7 @@ class TestWebCrawler(TestCase):
             }
         )
 
-    @mock.patch('scrapping.requests.get', side_effect=mock_requests_get)
+    @mock.patch('crawler.scrapping.requests.get', side_effect=mock_requests_get)
     def test_process_data(self, mock):
         crawler = WebCrawler()
         crawler.process_data()
@@ -182,7 +182,7 @@ class TestWebCrawler(TestCase):
             }
         )
     
-    @mock.patch('scrapping.requests.get', side_effect=mock_requests_get)
+    @mock.patch('crawler.scrapping.requests.get', side_effect=mock_requests_get)
     def test_get_object(self, mock):
         crawler = WebCrawler.get_object()
         
@@ -201,7 +201,7 @@ class TestWebCrawler(TestCase):
             ["cpu", "memory", "bandwidth", "storage", "price_per_month"]
         )
 
-    @mock.patch('scrapping.print', return_value=None)
+    @mock.patch('crawler.scrapping.print', return_value=None)
     def test_print_data_on_screen(self, mock_print):
         crawler = WebCrawler.get_object()
         crawler.print_data_on_screen()
@@ -209,7 +209,7 @@ class TestWebCrawler(TestCase):
         mock_print.assert_called_once_with(crawler.data)
 
     @mock.patch('builtins.open')
-    @mock.patch('scrapping.print', return_value=None)
+    @mock.patch('crawler.scrapping.print', return_value=None)
     def test_save_as_json(self, mock_print, mock_open):
         crawler = WebCrawler.get_object()
         crawler.save_as_json()
@@ -218,7 +218,7 @@ class TestWebCrawler(TestCase):
         mock_print.assert_called_once_with("Data saved in 'machine-webcrawler.json' file")
 
     @mock.patch('builtins.open')
-    @mock.patch('scrapping.print', return_value=None)
+    @mock.patch('crawler.scrapping.print', return_value=None)
     def test_save_as_csv(self, mock_print, mock_open):
         crawler = WebCrawler.get_object()
         crawler.save_as_csv()
