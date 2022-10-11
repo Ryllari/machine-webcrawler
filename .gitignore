@@ -4,3 +4,4 @@ __pycache__
 # Files
 *.pyc
 machine-webcrawler.json
+machine-webcrawler.csv

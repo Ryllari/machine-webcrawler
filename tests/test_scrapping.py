@@ -4,6 +4,7 @@ from unittest import TestCase
 from scrapping import WebCrawler
 from tests.requests_mock import mock_requests_get
 
+
 class TestWebCrawler(TestCase):
     """
     Tests scrapping.WebCrawler class
@@ -87,6 +88,14 @@ class TestWebCrawler(TestCase):
         
         self.assertTrue(isinstance(crawler, WebCrawler))
         self.assertEqual(len(crawler.data), 6)
+        self.assertEqual(
+            crawler.vultr_url, 
+            "https://www.vultr.com/products/bare-metal/#pricing"
+        )
+        self.assertEqual(
+            crawler.csv_headers, 
+            ["cpu", "memory", "bandwidth", "storage", "price_per_month"]
+        )
 
     @mock.patch('scrapping.print', return_value=None)
     def test_print_data_on_screen(self, mock_print):
@@ -103,3 +112,12 @@ class TestWebCrawler(TestCase):
 
         mock_open.assert_called_once_with('machine-webcrawler.json', 'w')
         mock_print.assert_called_once_with("Data saved in 'machine-webcrawler.json' file")
+
+    @mock.patch('builtins.open')
+    @mock.patch('scrapping.print', return_value=None)
+    def test_save_as_csv(self, mock_print, mock_open):
+        crawler = WebCrawler.get_object()
+        crawler.save_as_csv()
+
+        mock_open.assert_called_once_with('machine-webcrawler.csv', 'w')
+        mock_print.assert_called_once_with("Data saved in 'machine-webcrawler.csv' file")

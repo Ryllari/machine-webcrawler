@@ -15,6 +15,9 @@ def execute(args):
     if args.save_json:
         crawler.save_as_json()
 
+    if args.save_csv:
+        crawler.save_as_csv()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -30,10 +33,15 @@ if __name__ == "__main__":
         action='store_true',
         help='crawler the data and save the results into json file'
     )
+    parser.add_argument(
+        '--save_csv',
+        action='store_true',
+        help='crawler the data and save the results into csv file'
+    )
 
     args = parser.parse_args()
 
-    if not (args.print or args.save_json):
+    if not any([args.print, args.save_json, args.save_csv]):
         print("Please, choose at least one option as argument...")
         parser.print_help()
     

@@ -1,5 +1,7 @@
+import csv
 import json
 import requests
+
 from parsel import Selector
 from utils import get_b_content, remove_b_tags, remove_tabs_and_new_lines_from_text
 
@@ -14,6 +16,7 @@ class WebCrawler():
     def __init__(self):
         self.data = []
         self.vultr_url = "https://www.vultr.com/products/bare-metal/#pricing"
+        self.csv_headers = ["cpu", "memory", "bandwidth", "storage", "price_per_month"]
 
     @classmethod
     def get_object(cls) -> object:
@@ -76,3 +79,14 @@ class WebCrawler():
             json.dump(self.data, json_file)
     
         print("Data saved in 'machine-webcrawler.json' file")
+
+    def save_as_csv(self) -> None:
+        """
+        Save the data value from WebCrawler object into csv file
+        """
+        with open('machine-webcrawler.csv', 'w') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=self.csv_headers)
+            writer.writeheader()
+            writer.writerows(self.data)
+        
+        print("Data saved in 'machine-webcrawler.csv' file")
